@@ -112,9 +112,13 @@ namespace P2P.Socket.StartUp_Winform
         }
         public void Instance_RecordLogEvent(System.IO.StreamWriter ss, LogInfo logInfo)
         {
+
             if (LogUtils.Instance.LogLevel >= logInfo.LogLevel)
             {
                 Log(logInfo.Msg);
+                if (logInfo.Msg.IndexOf("已被使用")!=-1) {
+                    MessageBox.Show($"客户端名称[{ConfigCenter.Instance.ClientName}]已被使用，请更换客户端名称","配置失败",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -248,5 +252,18 @@ namespace P2P.Socket.StartUp_Winform
                 MessageBox.Show("端口不合法，端口应该再0~65535之间", "添加失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void PortMapItemListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (PortMapItemListBox.SelectedIndex > -1)
+            {
+                string portMapItem = PortMapItemListBox.SelectedItem.ToString();
+                string address = portMapItem.Substring(0, portMapItem.IndexOf("->"));
+                Clipboard.SetDataObject(address);
+                MessageBox.Show("访问地址复制成功\r\n"+address,"访问地址复制成功",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+            }
+        }
+
     }
 }
