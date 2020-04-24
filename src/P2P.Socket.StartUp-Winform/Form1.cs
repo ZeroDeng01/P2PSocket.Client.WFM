@@ -39,11 +39,16 @@ namespace P2P.Socket.StartUp_Winform
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            Log("********************************************");
-            Log("*  P2P内网穿透桌面客户端   作者：ZeroDeng  *");
-            Log("*  需要更专业的配置请自行手动修改配置文件  *");
-            Log("*  感谢内核作者:wireboy                    *");
-            Log("********************************************");
+            LogTextBox.AppendText("\r\n");
+            LogTextBox.AppendText("************************************************************************\r\n");
+            LogTextBox.AppendText("*              P2P内网穿透桌面客户端   作者：ZeroDeng                  *\r\n");
+            LogTextBox.AppendText("*              需要更专业的配置请自行手动修改配置文件                  *\r\n");
+            LogTextBox.AppendText("*              感谢内核作者:wireboy                                    *\r\n");
+            LogTextBox.AppendText("*              有好的建议或者意见请移步github提交issues                *\r\n");
+            LogTextBox.AppendText("*  客户端github地址:https://github.com/ZeroDeng01/P2PSocket.Client.WFM *\r\n");
+            LogTextBox.AppendText("************************************************************************\r\n");
+            LogTextBox.AppendText("\r\n");
+
             if (Config.IsExistConfig())
             {
                 //加载服务端地址
