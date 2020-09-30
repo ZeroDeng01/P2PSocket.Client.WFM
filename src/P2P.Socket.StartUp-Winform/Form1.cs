@@ -81,19 +81,21 @@ namespace P2P.Socket.StartUp_Winform
                 AllowPortListBox.DataSource = allowPorts;
 
                 //初始化日志回调
-                LogUtils.ClientRecordLogHandler = Instance_RecordLogEvent;
+                EasyInject.Get<ILogger>().OnWriteLog += PipeServer_OnWriteLog;
                 //初始启动P2PSocket
 
                 clientModule.Start();
+                AppConfig config = new AppConfig();
 
-                ConfigCenter.Instance.PortMapList.ForEach(t =>
-                {
-                    string localAddress = string.IsNullOrEmpty(t.LocalAddress) ? "127.0.0.1" : t.LocalAddress;
-                    string clientAddress = (t.P2PType == 0) ? ($"[{t.RemoteAddress}]:{t.RemotePort}") : ($"{t.P2PType}@[{t.RemoteAddress}]:{t.RemotePort}");
-                    string portMapItemStr = ($"{localAddress}:{t.LocalPort}->{clientAddress}");
-                    portMapItems.Add(portMapItemStr);
-                });
-                PortMapItemListBox.DataSource = portMapItems;
+                List<string> portmap = ini.GetPortMapItems();
+                if (portmap != null) {
+                    foreach (string s in portmap)
+                    {
+                        portMapItems.Add(s);
+                    }
+                    PortMapItemListBox.DataSource = portMapItems;
+                }
+
 
                 
 
@@ -112,8 +114,8 @@ namespace P2P.Socket.StartUp_Winform
         }
         public void Instance_RecordLogEvent(System.IO.StreamWriter ss, LogInfo logInfo)
         {
-
-            if (LogUtils.Instance.LogLevel >= logInfo.LogLevel)
+            LogInfo log = new LogInfo();
+            if (log.LogLevel >= logInfo.LogLevel)
             {
                 Log(logInfo.Msg);
                 if (logInfo.Msg.IndexOf("已被使用")!=-1) {
@@ -121,13 +123,25 @@ namespace P2P.Socket.StartUp_Winform
                 }
             }
         }
-
         private void Log(string msg) {
             this.BeginInvoke((MethodInvoker)delegate
             {
                 LogTextBox.AppendText("Client > " + msg + "\r\n");
             });
         }
+
+
+
+        /// <summary>
+        /// 日志写入响应方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PipeServer_OnWriteLog(object sender, LogInfo e)
+        {
+            Log(e.Msg);
+        }
+
 
         /// <summary>
         /// 修改基础配置
@@ -264,6 +278,11 @@ namespace P2P.Socket.StartUp_Winform
 
             }
         }
+
+
+
+
+
 
     }
 }

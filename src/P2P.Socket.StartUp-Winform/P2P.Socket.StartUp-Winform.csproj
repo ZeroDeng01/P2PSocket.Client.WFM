@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="ConfigCenter.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +96,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="InitFile.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -122,16 +124,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\P2PSocekt.Core\P2PSocket.Core.csproj">
-      <Project>{9fda0c16-c49c-47cb-883b-916784334f35}</Project>
-      <Name>P2PSocket.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\P2PSocket.Client\P2PSocket.Client.csproj">
-      <Project>{5948e733-041f-478b-83d1-91c7f096ebe6}</Project>
-      <Name>P2PSocket.Client</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.2 %28x86 和 x64%29</ProductName>
@@ -142,6 +134,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="G:\Downloads\IDM\压缩文件\Wireboy.Socket.P2PSocket-master\src\P2PSocekt.Core\P2PSocket.Core.csproj">
+      <Project>{c03d5dee-bd3b-4b4f-893b-27be45363516}</Project>
+      <Name>P2PSocket.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="G:\Downloads\IDM\压缩文件\Wireboy.Socket.P2PSocket-master\src\P2PSocket.Client\P2PSocket.Client.csproj">
+      <Project>{07ec5267-0506-442e-bdfd-f47b96e8386a}</Project>
+      <Name>P2PSocket.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

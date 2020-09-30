@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace P2PSocket.Client
+namespace P2PSocket.StartUp_Windows
 {
 
     public class ConfigCenter
@@ -77,7 +77,7 @@ namespace P2PSocket.Client
         ///     客户端黑名单
         /// </summary>
         public List<string> BlackClients { get; } = new List<string>();
-
+        /*
         public static string GetConfigText()
         {
             StringBuilder sb = new StringBuilder();
@@ -135,6 +135,8 @@ namespace P2PSocket.Client
             }
             return sb.ToString();
         }
+        */
+        
     }
 
 

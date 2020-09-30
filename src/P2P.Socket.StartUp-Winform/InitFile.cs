@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P2PSocket.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -74,11 +75,11 @@ namespace P2P.Socket.StartUp_Winform
         public bool Del(string value) {
             try
             {
-                if (value.IndexOf("127.0.0.1")!=-1) {
-                    value = value.Replace("127.0.0.1:","");
+                if (value.IndexOf("127.0.0.1") != -1) {
+                    value = value.Replace("127.0.0.1:", "");
                 }
                 var str = System.IO.File.ReadAllText(this.Path);
-                str = str.Replace(value+"\r\n", "");
+                str = str.Replace(value + "\r\n", "");
                 str = str.Replace(value, "");
                 System.IO.File.WriteAllText(this.Path, str);
                 return true;
@@ -97,7 +98,7 @@ namespace P2P.Socket.StartUp_Winform
                 Console.WriteLine(mapIndex);
                 if (mapIndex != -1)
                 {
-                    str = str.Insert(mapIndex+13, "\r\n"+value);
+                    str = str.Insert(mapIndex + 13, "\r\n" + value);
                 }
                 else {
                     str = str + "\r\n[PortMapItem]" + "\r\n" + value;
@@ -113,6 +114,37 @@ namespace P2P.Socket.StartUp_Winform
             }
 
         }
+
+
+        /// <summary>
+        /// 获取所有映射信息
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetPortMapItems(){
+            List<string> vs = new List<string>();
+            try
+            {
+                var str = System.IO.File.ReadAllText(this.Path);
+                str = str.Replace("[PortMapItem]","*");
+                string[] temp = str.Split('*');
+                temp = temp[1].Split(Environment.NewLine.ToCharArray());
+                
+                foreach (string s in temp) {
+                    if (s.Length > 0) {
+
+                        vs.Add(s);
+                    }
+                }
+
+            }
+            catch
+            {
+                Console.WriteLine("配置写入失败");
+                return null;
+            }
+            return vs;
+        }
+
 
 
     }
